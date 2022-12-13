@@ -96,9 +96,9 @@ public class GretingsController {
 		
 	}
 	
-	@GetMapping(value = "buscarpornome")
+	@GetMapping(value = "buscarPorNome")
 	@ResponseBody
-	public ResponseEntity<List<Usuario>> buscarpornome(@RequestParam(name = "name")String name){
+	public ResponseEntity<List<Usuario>> buscarPorNome(@RequestParam(name = "name")String name){
 		List<Usuario> usuario = usuarioRepository.buscarProNome(name.trim().toUpperCase());
 		return new ResponseEntity<List<Usuario>>(usuario,HttpStatus.OK);
 	}
