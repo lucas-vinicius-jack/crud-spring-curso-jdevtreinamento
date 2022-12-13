@@ -61,6 +61,7 @@
 								<th scope="col">ID</th>
 								<th scope="col">Nome</th>
 								<th scope="col">Editar</th>
+								<th scope="col">Delete</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -86,6 +87,27 @@
 
 	<script type="text/javascript">
 	
+		function deleteuser(id){
+			
+			if(confirm('Deseja realmente deletar?')){
+				$.ajax({
+					method: "DELETE",
+					url: "delete",
+					data: "iduser=" + id,
+					success: function (response) {
+						
+						$('#' + id).remove();
+						
+						alert(response);
+					}
+				}).fail(function (xhr, status, errorThrows) {
+					alert("Erro ao deletar usuário por id: " + xhr.responseText);
+				});
+			}
+			
+			
+		}
+	
 		function pesquisarUser(){
 			var nome = $('#nameBusca').val();
 			
@@ -99,11 +121,15 @@
 						
 						for(var i = 0; i < response.length; i++){
 							$('#tabelaresultados > tbody').append(
-							'<tr><td>'+ 
+							'<tr id="'+response[i].id+'"><td>'+ 
 								response[i].id +
 							'</td><td>'+
 								response[i].nome +
-							'</td><td> <button type="button" class="btn btn-primary" onclick="colocarEmEdicao('+response[i].id+')">Editar</button>  </td></tr>');
+							'</td><td>'+
+								' <button type="button" class="btn btn-primary" onclick="colocarEmEdicao('+response[i].id+')">Editar</button>'+
+							'  </td><td>'+
+								'<button type="button" class="btn btn-danger" onclick="deleteuser('+response[i].id+')">Delete</button>'+
+							'</td></tr>');
 						}
 					}
 				}).fail(function (xhr, status, errorThrows) {
