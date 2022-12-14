@@ -11,11 +11,17 @@
 		integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 
+	<style type="text/css">
+		html{margin: 5%}
+		#resultados{height: 300px; overflow: auto}
+	
+	</style>
+
 </head>
 
 <body>
 
-	<h1>Página de cadastro</h1>
+	<h1>Spring Boot Rest API CRUD Jdev Treinamento</h1>
 	<br>
 
 	<form action="" id="formCadastroUser">
@@ -35,8 +41,10 @@
 	<button type="button" class="btn btn-secondary"
 		onclick="document.getElementById('formCadastroUser').reset();">Novo</button>
 
-	<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal"
 		data-bs-target="#modalpesquisauser">Pesquisar</button>
+		
+	<button type="button" class="btn btn-danger" onclick="botaoDeletarDaTela()">Deletar</button>
 
 
 	<div class="modal fade" id="modalpesquisauser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -54,21 +62,22 @@
 						</div>
 						<button type="button" class="btn btn-success" onclick="pesquisarUser()">Buscar</button>
 					</form>
-
-					<table class="table" id="tabelaresultados">
-						<thead>
-							<tr>
-								<th scope="col">ID</th>
-								<th scope="col">Nome</th>
-								<th scope="col">Editar</th>
-								<th scope="col">Delete</th>
-							</tr>
-						</thead>
-						<tbody>
-							
-						</tbody>
-					</table>
-
+					
+					<div id="resultados")>
+						<table class="table" id="tabelaresultados">
+							<thead>
+								<tr>
+									<th scope="col">ID</th>
+									<th scope="col">Nome</th>
+									<th scope="col">Editar</th>
+									<th scope="col">Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -86,6 +95,15 @@
 		</script>
 
 	<script type="text/javascript">
+	
+		function botaoDeletarDaTela(id){
+			var id = $('#id').val();
+			if(id != null && id.trim() != ''){
+				deleteuser(id);
+				document.getElementById('formCadastroUser').reset();
+			}
+			
+		}
 	
 		function deleteuser(id){
 			
@@ -161,6 +179,17 @@
 			var nome = $("#nome").val();
 			var idade = $("#idade").val();
 
+			if(nome == null || nome != null && nome.trim() == ''){
+				alert('Informe o nome');
+				return;
+			}
+			
+			if(idade == null || nome != null && idade.trim() == ''){
+				alert('Informe a idade');
+				return;
+			}
+			
+			
 			$.ajax({
 				method: "POST",
 				url: "salvar",
